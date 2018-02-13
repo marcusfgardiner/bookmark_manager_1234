@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require 'link'
+require_relative 'lib/link'
 
 class BookmarkManager < Sinatra::Base
 

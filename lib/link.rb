@@ -6,8 +6,6 @@ class Link
 
     result = connection.exec 'SELECT * FROM links'
 
-    result.map do |row|
-      row['url']
-    end
+    result.map { |row| row['url'] }
   end
 end
