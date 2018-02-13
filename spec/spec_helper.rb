@@ -29,6 +29,12 @@ require 'rspec'
 Capybara.app = BookmarkManager
 
 RSpec.configure do |config|
+  config.before(:each) do
+    connection = PG.connect dbname: 'bookmark_manager_' + ENV['RACK_ENV']
+    connection.exec "TRUNCATE links;
+    INSERT INTO links (url) VALUES ('http://facebook.com');
+    INSERT INTO links (url) VALUES ('http://google.com');"
+  end
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
