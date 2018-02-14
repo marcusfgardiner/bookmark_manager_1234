@@ -6,7 +6,8 @@ class DatabaseConnection
   end
 
   def self.query(query_string)
-    @@database.exec(query_string)
+    result = @@database.exec(query_string)
+    result.values
   end
 
 end
