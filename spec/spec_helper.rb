@@ -24,16 +24,20 @@ require File.join(File.dirname(__FILE__), '..', 'app.rb')
 require 'capybara'
 require 'capybara/rspec'
 require 'rspec'
+require File.join(File.dirname(__FILE__), '..', 'lib', 'database_connection.rb')
+require 'rake'
+require File.join(File.dirname(__FILE__), '..', 'Rakefile.rb')
 
 # Tell Capybara to talk to BookmarkManager
 Capybara.app = BookmarkManager
 
 RSpec.configure do |config|
   config.before(:each) do
-    connection = PG.connect dbname: 'bookmark_manager_' + ENV['RACK_ENV']
-    connection.exec "TRUNCATE links;
-    INSERT INTO links (url) VALUES ('http://facebook.com');
-    INSERT INTO links (url) VALUES ('http://google.com');"
+    Rake::Task[:test].execute
+  #   DatabaseConnection.setup('bookmark_manager')
+  #   DatabaseConnection.query("TRUNCATE links;
+  #   INSERT INTO links (url) VALUES ('http://facebook.com');
+  #   INSERT INTO links (url) VALUES ('http://google.com');")
   end
 
   # rspec-expectations config goes here. You can use an alternate

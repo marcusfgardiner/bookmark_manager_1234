@@ -10,3 +10,6 @@ class DatabaseConnection
     result.values
   end
 end
+
+
+# Put this in a Rake task
