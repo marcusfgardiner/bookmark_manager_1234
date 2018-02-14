@@ -7,9 +7,8 @@
   <body>
     <h1><%= @links %></h1>
   </body>
+  <form action="/add_link" method="post">
+    <input type="text" name="new_link" value="">
+    <input type="submit" value="Add Bookmark">
+  </form>
 </html>
-
-<form action="/add_link" method="post">
-  <input type="text" name="new_link" value="">
-  <input type="submit" value="Add Bookmark">
-</form>
