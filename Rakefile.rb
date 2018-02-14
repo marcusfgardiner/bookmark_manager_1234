@@ -1,16 +1,13 @@
+require './lib/database_connection.rb'
+
 task :setup do
-  # DatabaseConnection.setup('postgres')
-  conn = DatabaseConnection.setup('postgres')
-
-# TODO: Stuff for test database
-  conn.exec("CREATE DATABASE bookmark_manager_test")
-  DatabaseConnection.setup('bookmark_manager_test')
-
-# TODO: Stuff for development database
-  conn.exec("CREATE DATABASE bookmark_manager_development")
-
-  Rake::Task[:test].execute
-  Rake::Task[:development].execute
+  p 'Setting up databases...'
+  conn = PG.connect
+  ['bookmark_manager','bookmark_manager_test'].each do |database|
+      conn.exec("CREATE DATABASE #{database}")
+      DatabaseConnection.setup("#{database}")
+      DatabaseConnection.query("CREATE TABLE links (id SERIAL PRIMARY KEY, url VARCHAR(60));")
+    end
 end
 
 task :test do
@@ -18,8 +15,4 @@ task :test do
   DatabaseConnection.query("TRUNCATE links;
   INSERT INTO links (url) VALUES ('http://facebook.com');
   INSERT INTO links (url) VALUES ('http://google.com');")
-end
-
-task :development do
-    # DatabaseConnection.setup('bookmark_manager_development')
 end
