@@ -7,7 +7,7 @@ task :setup do
       conn.exec("CREATE DATABASE #{database}")
       DatabaseConnection.setup("#{database}")
       DatabaseConnection.query("CREATE TABLE links (id SERIAL PRIMARY KEY, url VARCHAR(60));")
-    end
+  end
 end
 
 task :test do
